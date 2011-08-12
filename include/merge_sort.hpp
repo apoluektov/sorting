@@ -15,54 +15,65 @@
 namespace merge_sort_aux
 {
 
+template <class RanIt, class T>
 inline
-void merge(std::vector<size_t>& v, size_t const low, size_t const mid, size_t const high,
-           std::vector<size_t>& buf)
+void merge(RanIt b, RanIt m, RanIt e, std::vector<T>& buf)
 {
-    for (size_t i = low; i <= high; ++i)
-        buf[i] = v[i];
+    std::copy(b, e, buf.begin());
 
-    size_t i1 = low;
-    size_t const s1 = mid + 1;
+    RanIt i1 = buf.begin();
+    RanIt const e1 = buf.begin() + std::distance(b, m);
 
-    size_t i2 = mid + 1;
-    size_t const s2 = high + 1;
+    RanIt i2 = e1;
+    RanIt const e2 = buf.begin() + std::distance(b, e);
 
-    size_t k = low;
+    RanIt k = b;
 
-    while (i1 != s1 && i2 != s2)
-        if (buf[i1] < buf[i2])
-            v[k++] = buf[i1++];
+    while (i1 != e1 && i2 != e2)
+        if (*i1 < *i2)
+            *k++ = *i1++;
         else
-            v[k++] = buf[i2++];
+            *k++ = *i2++;
 
-    while (i1 != s1)
-        v[k++] = buf[i1++];
+    while (i1 != e1)
+        *k++ = *i1++;
 
-    while (i2 != s2)
-        v[k++] = buf[i2++];
+    while (i2 != e2)
+        *k++ = *i2++;
 }
 
+template <class RanIt, class T>
 inline
-void merge_sort_impl(std::vector<size_t>& v, size_t const low, size_t const high,
-                     std::vector<size_t>& buf)
+void merge_sort_impl(RanIt b, RanIt e, std::vector<T>& buf)
 {
-    if (low == high)
+    if (b == e || b + 1 == e)
         return;
 
-    size_t const mid = (low + high) / 2;
-    merge_sort_impl(v, low, mid, buf);
-    merge_sort_impl(v, mid+1, high, buf);
-    merge(v, low, mid, high, buf);
+    RanIt m = b + (std::distance(b, e) + 1) / 2;
+
+    merge_sort_impl(b, m, buf);
+    merge_sort_impl(m, e, buf);
+    merge(b, m, e, buf);
 }
 
 } // namespace merge_sort_aux
 
+// iterators version
+template <class RanIt>
 inline
-void merge_sort(std::vector<size_t>& v)
+void merge_sort(RanIt b, RanIt e)
 {
-    std::vector<size_t> buf(v.size());
-    merge_sort_aux::merge_sort_impl(v, 0, v.size()-1, buf);
+    typedef typename std::iterator_traits<RanIt>::value_type T;
+    std::vector<T> buf(std::distance(b, e)); // could use scoped_array instead
+    merge_sort_aux::merge_sort_impl(b, e, buf);
+}
+
+// container version
+template <class Cont>
+inline
+void merge_sort(Cont& v)
+{
+    return merge_sort(v.begin(), v.end());
 }
 
 #endif // MERGESORT_HPP_INCLUDED_
