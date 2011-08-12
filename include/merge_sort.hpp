@@ -13,6 +13,25 @@
 #include <functional>
 
 
+// iterators versions
+
+template <class RanIt, class Cmp>
+inline void merge_sort(RanIt b, RanIt e, Cmp c);
+
+template <class RanIt>
+inline void merge_sort(RanIt b, RanIt e);
+
+// container versions
+
+template <class Cont, class Cmp>
+inline void merge_sort(Cont& v, Cmp c);
+
+template <class Cont>
+inline void merge_sort(Cont& v);
+
+
+// implementation
+
 namespace merge_sort_aux
 {
 
