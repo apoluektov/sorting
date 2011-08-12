@@ -10,14 +10,15 @@
 #include <vector>
 #include <cstddef>
 #include <algorithm>
+#include <functional>
 
 
 namespace merge_sort_aux
 {
 
-template <class RanIt, class T>
+template <class RanIt, class Cmp, class T>
 inline
-void merge(RanIt b, RanIt m, RanIt e, std::vector<T>& buf)
+void merge(RanIt b, RanIt m, RanIt e, Cmp const& c, std::vector<T>& buf)
 {
     std::copy(b, e, buf.begin());
 
@@ -30,7 +31,7 @@ void merge(RanIt b, RanIt m, RanIt e, std::vector<T>& buf)
     RanIt k = b;
 
     while (i1 != e1 && i2 != e2)
-        if (*i1 < *i2)
+        if (c(*i1, *i2))
             *k++ = *i1++;
         else
             *k++ = *i2++;
@@ -42,38 +43,57 @@ void merge(RanIt b, RanIt m, RanIt e, std::vector<T>& buf)
         *k++ = *i2++;
 }
 
-template <class RanIt, class T>
+template <class RanIt, class Cmp, class T>
 inline
-void merge_sort_impl(RanIt b, RanIt e, std::vector<T>& buf)
+void merge_sort_impl(RanIt b, RanIt e, Cmp const& c, std::vector<T>& buf)
 {
     if (b == e || b + 1 == e)
         return;
 
     RanIt m = b + (std::distance(b, e) + 1) / 2;
 
-    merge_sort_impl(b, m, buf);
-    merge_sort_impl(m, e, buf);
-    merge(b, m, e, buf);
+    merge_sort_impl(b, m, c, buf);
+    merge_sort_impl(m, e, c, buf);
+    merge(b, m, e, c, buf);
 }
 
 } // namespace merge_sort_aux
 
-// iterators version
+// iterators versions
+
+template <class RanIt, class Cmp>
+inline
+void merge_sort(RanIt b, RanIt e, Cmp c)
+{
+    typedef typename std::iterator_traits<RanIt>::value_type T;
+    std::vector<T> buf(std::distance(b, e)); // could use scoped_array instead
+    merge_sort_aux::merge_sort_impl(b, e, c, buf);
+}
+
 template <class RanIt>
 inline
 void merge_sort(RanIt b, RanIt e)
 {
     typedef typename std::iterator_traits<RanIt>::value_type T;
-    std::vector<T> buf(std::distance(b, e)); // could use scoped_array instead
-    merge_sort_aux::merge_sort_impl(b, e, buf);
+    return merge_sort(b, e, std::less<T>());
 }
 
-// container version
+// container versions
+
+template <class Cont, class Cmp>
+inline
+void merge_sort(Cont& v, Cmp c)
+{
+    return merge_sort(v.begin(), v.end(), c);
+}
+
+
 template <class Cont>
 inline
 void merge_sort(Cont& v)
 {
     return merge_sort(v.begin(), v.end());
 }
+
 
 #endif // MERGESORT_HPP_INCLUDED_
