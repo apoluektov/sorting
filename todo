@@ -1,0 +1,10 @@
+- cleanup includes in merge_sort.hpp
+- unit-tests to boost.test
+- benchmarking
+- heap_sort -> iterators version
+- namespaces
+- radix, quick, quick-iterative
+- naming of types
+- comments and documentation
+- Makefile madness
+- headers: to 'sorting' dir
