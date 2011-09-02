@@ -15,18 +15,18 @@
 // iterators versions
 
 template <class RanIt, class Cmp>
-inline void merge_sort_bottomup(RanIt b, RanIt e, Cmp c);
+void merge_sort_bottomup(RanIt b, RanIt e, Cmp c);
 
 template <class RanIt>
-inline void merge_sort_bottomup(RanIt b, RanIt e);
+void merge_sort_bottomup(RanIt b, RanIt e);
 
 // container versions
 
 template <class Cont, class Cmp>
-inline void merge_sort_bottomup(Cont& v, Cmp c);
+void merge_sort_bottomup(Cont& v, Cmp c);
 
 template <class Cont>
-inline void merge_sort_bottomup(Cont& v);
+void merge_sort_bottomup(Cont& v);
 
 
 // implementation

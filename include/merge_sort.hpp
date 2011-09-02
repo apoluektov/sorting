@@ -16,18 +16,18 @@
 // iterators versions
 
 template <class RanIt, class Cmp>
-inline void merge_sort(RanIt b, RanIt e, Cmp c);
+void merge_sort(RanIt b, RanIt e, Cmp c);
 
 template <class RanIt>
-inline void merge_sort(RanIt b, RanIt e);
+void merge_sort(RanIt b, RanIt e);
 
 // container versions
 
 template <class Cont, class Cmp>
-inline void merge_sort(Cont& v, Cmp c);
+void merge_sort(Cont& v, Cmp c);
 
 template <class Cont>
-inline void merge_sort(Cont& v);
+void merge_sort(Cont& v);
 
 
 // implementation
