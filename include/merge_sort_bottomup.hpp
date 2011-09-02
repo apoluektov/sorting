@@ -7,8 +7,9 @@
 #ifndef MERGESORTBOTTOMUP_HPP_INCLUDED_
 #define MERGESORTBOTTOMUP_HPP_INCLUDED_
 
-#include <cstddef>
 #include <vector>
+#include <cstddef>
+#include <algorithm>
 #include <functional>
 
 
