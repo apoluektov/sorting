@@ -7,6 +7,11 @@
 #include "heap_sort.hpp"
 #include <cstdlib>
 
+#define BOOST_TEST_MAIN
+#define BOOST_TEST_DYN_LINK
+#include <boost/test/auto_unit_test.hpp>
+
+
 void generate_random(std::vector<size_t>& v, size_t n, size_t max)
 {
     for (size_t i = 0; i < n; ++i) {
@@ -25,15 +30,16 @@ bool check_sorted(std::vector<size_t> const& v)
 }
 
 
-int main()
+BOOST_AUTO_TEST_SUITE(test_heap_sort);
+
+BOOST_AUTO_TEST_CASE(random)
 {
     std::vector<size_t> v;
     generate_random(v, 1000, 1<<20);
 
     heap_sort(v);
 
-    if (check_sorted(v))
-        return 0;
-    else
-        return 1;
+    BOOST_CHECK(check_sorted(v));
 }
+
+BOOST_AUTO_TEST_SUITE_END();

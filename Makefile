@@ -5,19 +5,19 @@
 # LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 test_heap_sort: test_heap_sort.o
-	g++ -o test_heap_sort test_heap_sort.o
+	g++ -o test_heap_sort test_heap_sort.o -lboost_unit_test_framework
 
 test_heap_sort.o: test/test_heap_sort.cpp
 	g++ -Wall -c -o test_heap_sort.o test/test_heap_sort.cpp -Iinclude
 
 test_merge_sort: test_merge_sort.o
-	g++ -o test_merge_sort test_merge_sort.o
+	g++ -o test_merge_sort test_merge_sort.o -lboost_unit_test_framework
 
 test_merge_sort.o: test/test_merge_sort.cpp
 	g++ -Wall -c -o test_merge_sort.o test/test_merge_sort.cpp -Iinclude
 
 test_merge_sort_bottomup: test_merge_sort_bottomup.o
-	g++ -o test_merge_sort_bottomup test_merge_sort_bottomup.o
+	g++ -o test_merge_sort_bottomup test_merge_sort_bottomup.o -lboost_unit_test_framework
 
 test_merge_sort_bottomup.o: test/test_merge_sort_bottomup.cpp
 	g++ -Wall -c -o test_merge_sort_bottomup.o test/test_merge_sort_bottomup.cpp -Iinclude
