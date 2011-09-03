@@ -15,6 +15,15 @@
 
 BOOST_AUTO_TEST_SUITE(test_heap_sort);
 
+BOOST_AUTO_TEST_CASE(empty)
+{
+    std::vector<size_t> v;
+
+    heap_sort(v);
+
+    BOOST_CHECK(v.empty());
+}
+
 BOOST_AUTO_TEST_CASE(random)
 {
     std::vector<size_t> v;
