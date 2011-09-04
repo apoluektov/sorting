@@ -22,12 +22,19 @@ test_merge_sort_bottomup: test_merge_sort_bottomup.o
 test_merge_sort_bottomup.o: test/test_merge_sort_bottomup.cpp
 	g++ -Wall -c -o test_merge_sort_bottomup.o test/test_merge_sort_bottomup.cpp -Iinclude
 
-all: test_heap_sort test_merge_sort test_merge_sort_bottomup
+test_radix_sort: test_radix_sort.o
+	g++ -o test_radix_sort test_radix_sort.o -lboost_unit_test_framework
+
+test_radix_sort.o: test/test_radix_sort.cpp
+	g++ -Wall -c -o test_radix_sort.o test/test_radix_sort.cpp -Iinclude
+
+all: test_heap_sort test_merge_sort test_merge_sort_bottomup test_radix_sort
 
 check: all
 	./test_heap_sort
 	./test_merge_sort
 	./test_merge_sort_bottomup
+	./test_radix_sort
 
 clean:
 	rm -f *.o core
