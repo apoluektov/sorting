@@ -7,6 +7,7 @@
 #ifndef RADIXSORTIMPL_HPP_INCLUDED_
 #define RADIXSORTIMPL_HPP_INCLUDED_
 
+#include <boost/static_assert.hpp>
 #include <cstddef>
 #include <vector>
 
@@ -74,6 +75,8 @@ template <size_t Radix, class RanIt>
 inline
 void radix_sort(RanIt b, RanIt e, size_t max)
 {
+    BOOST_STATIC_ASSERT(Radix > 1);
+
     typedef typename std::iterator_traits<RanIt>::value_type T;
     std::vector<T> tmp(e - b);
 
