@@ -34,4 +34,14 @@ BOOST_AUTO_TEST_CASE(random)
     BOOST_CHECK(check_sorted(v));
 }
 
+BOOST_AUTO_TEST_CASE(random_radix2)
+{
+    std::vector<size_t> v;
+    generate_random(v, 1000, 1<<20);
+
+    radix_sort<2>(v, 1<<20);
+
+    BOOST_CHECK(check_sorted(v));
+}
+
 BOOST_AUTO_TEST_SUITE_END();

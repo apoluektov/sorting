@@ -35,6 +35,13 @@ size_t nth_digit(size_t num, size_t n)
     return r / m;
 }
 
+template <>
+inline
+size_t nth_digit<2>(size_t num, size_t n)
+{
+    return (num >> n) & 1;
+}
+
 inline
 size_t num_digits(size_t num, size_t radix)
 {
