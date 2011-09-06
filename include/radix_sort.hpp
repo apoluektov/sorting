@@ -13,8 +13,8 @@
 // iterators versions
 
 // TODO: implement
-//template <class RanIt, size_t Radix>
-//void radix_sort(RanIt b, RanIt e);
+template <class Radix, class RanIt>
+void radix_sort(RanIt b, RanIt e, size_t max);
 
 // container versions
 

@@ -8,6 +8,7 @@
 #define RADIXSORTIMPL_HPP_INCLUDED_
 
 #include <cstddef>
+#include <vector>
 
 
 namespace radix_sort_aux
@@ -42,16 +43,14 @@ size_t num_digits(size_t num, size_t radix)
     return n;
 }
 
-template <size_t Radix, class Cont>
+template <size_t Radix, class RanIt, class T>
 inline
-void sort_nth_digit(Cont& v, size_t digit, Cont& tmp)
+void sort_nth_digit(RanIt b, RanIt e, size_t digit, std::vector<T>& tmp)
 {
-    size_t const vs = v.size();
-
     // first pass: fill buckets' info
     size_t buckets[Radix] = { 0 };
-    for (size_t i = 0; i < vs; ++i) {
-        size_t d = nth_digit(v[i], digit, Radix);
+    for (RanIt c = b ; c != e; ++c) {
+        size_t d = nth_digit(*c, digit, Radix);
         ++buckets[d];
     }
 
@@ -61,25 +60,33 @@ void sort_nth_digit(Cont& v, size_t digit, Cont& tmp)
     }
 
     // second pass: sort
-    for (size_t i = 0; i < vs; ++i) {
-        size_t d = nth_digit(v[i], digit, Radix);
-        tmp[counters[d]++] = v[i];
+    for (RanIt c = b; c != e; ++c) {
+        size_t d = nth_digit(*c, digit, Radix);
+        tmp[counters[d]++] = *c;
     }
-    swap(tmp, v);
+    std::copy(tmp.begin(), tmp.end(), b);
 }
 
 } // namespace radix_sort_aux
 
 
+template <size_t Radix, class RanIt>
+inline
+void radix_sort(RanIt b, RanIt e, size_t max)
+{
+    typedef typename std::iterator_traits<RanIt>::value_type T;
+    std::vector<T> tmp(e - b);
+
+    size_t const ndigits = radix_sort_aux::num_digits(max, Radix);
+    for (size_t d = 0; d < ndigits; ++d)
+        radix_sort_aux::sort_nth_digit<Radix>(b, e, d, tmp);
+}
+
 template <size_t Radix, class Cont>
 inline
 void radix_sort(Cont& v, size_t max)
 {
-    Cont tmp(v.size());
-
-    size_t const ndigits = radix_sort_aux::num_digits(max, Radix);
-    for (size_t d = 0; d < ndigits; ++d)
-        radix_sort_aux::sort_nth_digit<Radix>(v, d, tmp);
+    return radix_sort<Radix>(v.begin(), v.end(), max);
 }
 
 #endif // RADIXSORTIMPL_HPP_INCLUDED_
