@@ -25,12 +25,13 @@ size_t mpow(size_t base, size_t power)
     return r;
 }
 
+template <size_t Radix>
 inline
-size_t nth_digit(size_t num, size_t n, size_t radix)
+size_t nth_digit(size_t num, size_t n)
 {
-    size_t m = mpow(radix, n);
+    size_t m = mpow(Radix, n);
 
-    size_t r = num % (radix * m);
+    size_t r = num % (Radix * m);
     return r / m;
 }
 
@@ -51,7 +52,7 @@ void sort_nth_digit(RanIt b, RanIt e, size_t digit, std::vector<T>& tmp)
     // first pass: fill buckets' info
     size_t buckets[Radix] = { 0 };
     for (RanIt c = b ; c != e; ++c) {
-        size_t d = nth_digit(*c, digit, Radix);
+        size_t d = nth_digit<Radix>(*c, digit);
         ++buckets[d];
     }
 
@@ -62,7 +63,7 @@ void sort_nth_digit(RanIt b, RanIt e, size_t digit, std::vector<T>& tmp)
 
     // second pass: sort
     for (RanIt c = b; c != e; ++c) {
-        size_t d = nth_digit(*c, digit, Radix);
+        size_t d = nth_digit<Radix>(*c, digit);
         tmp[counters[d]++] = *c;
     }
     std::copy(tmp.begin(), tmp.end(), b);
