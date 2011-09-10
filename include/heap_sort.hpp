@@ -10,44 +10,48 @@
 #include <vector>
 #include <cstddef>
 #include <algorithm>
+#include <functional>
 
 
 namespace heap_sort_aux 
 {
 
+template <class RanIt, class Comp>
 inline
-void make_heap(std::vector<size_t>& v)
+void make_heap(RanIt b, RanIt e, Comp cmp)
 {
-    size_t size = v.size();
+    size_t size = e - b;
     for (size_t i = 0; i < size; ++i) {
         // bubble up
-        for (size_t j = i; j > 0; j = (j - 1) / 2) {
-            if (v[j] > v[(j-1)/2])
-	      std::swap(v[j], v[(j-1)/2]);
+        for (size_t j = i; j > 0; j = (j-1)/2) {
+            if (!cmp(*(b + j), *(b + (j-1)/2)))
+                std::swap(*(b + j), *(b + (j-1)/2));
             else
                 break;
         }
     }
 }
 
+template <class RanIt, class Comp>
 inline
-void remove_root(size_t idx, std::vector<size_t>& v)
+void remove_root(RanIt b, RanIt e, Comp cmp)
 {
-    size_t size = v.size();
-    std::swap(v[0], v[size-idx-1]);
+    typedef typename std::iterator_traits<RanIt>::value_type T;
 
-    for (size_t j = 0; j < size-idx-1; ) {
+    size_t size = e - b;
+    std::swap(*b, *(e-1));
+    for (size_t j = 0; j < size-1; ) {
         // bubble down
-        size_t v1 = 2*j+1 < size-idx-1 ? v[2*j+1] : v[j];
-        size_t v2 = 2*j+2 < size-idx-1 ? v[2*j+2] : v[j];
+        T const& v1 = 2*j+1 < size-1 ? *(b + 2*j+1) : *(b + j);
+        T const& v2 = 2*j+2 < size-1 ? *(b + 2*j+2) : *(b + j);
 
-        if (v[j] < v1 || v[j] < v2) {
-            if (v1 >= v2) {
-                std::swap(v[j], v[2*j+1]);
+        if (cmp(*(b + j), v1) || cmp(*(b + j), v2)) {
+            if (!cmp(v1, v2)) {
+                std::swap(*(b + j), *(b + 2*j+1));
                 j = 2*j + 1;
             }
             else {
-                std::swap(v[j], v[2*j+2]);
+                std::swap(*(b + j), *(b + 2*j+2));
                 j = 2*j + 2;
             }
         }
@@ -59,15 +63,38 @@ void remove_root(size_t idx, std::vector<size_t>& v)
 
 } // namespace heap_sort_aux
 
+template <class RanIt, class Comp>
 inline
-void heap_sort(std::vector<size_t>& v)
+void heap_sort(RanIt b, RanIt e, Comp cmp)
 {
-    heap_sort_aux::make_heap(v);
+    heap_sort_aux::make_heap(b, e, cmp);
 
-    size_t size = v.size();
+    size_t size = e - b;
     for (size_t i = 0; i < size; ++i) {
-        heap_sort_aux::remove_root(i, v);
+        heap_sort_aux::remove_root(b, e-i, cmp);
     }
+}
+
+template <class RanIt>
+inline
+void heap_sort(RanIt b, RanIt e)
+{
+    typedef typename std::iterator_traits<RanIt>::value_type T;
+    return heap_sort(b, e, std::less<T>());
+}
+
+template <class Container>
+inline
+void heap_sort(Container& v)
+{
+    return heap_sort(v.begin(), v.end());
+}
+
+template <class Container, class Comp>
+inline
+void heap_sort(Container& v, Comp cmp)
+{
+    return heap_sort(v.begin(), v.end(), cmp);
 }
 
 #endif // HEAPSORT_HPP_INCLUDED_
