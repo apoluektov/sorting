@@ -9,8 +9,6 @@
 - comments and documentation
 - Makefile madness
 - radix sort: seems to not be very efficient
-- radix sort: static assert on incorrect radix or max
-- radix sort: specialization for Radix==2
 
 - namespaces: later, when merging with 'steel' project, or when decision made not to merge them
 - headers: to 'sorting' dir: same as for namespaces
