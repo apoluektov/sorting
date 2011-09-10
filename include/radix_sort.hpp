@@ -12,13 +12,14 @@
 
 // iterators versions
 
-template <size_t Radix, class RanIt>
-void radix_sort(RanIt b, RanIt e, size_t max);
+template <size_t Radix, class RandomAccessIterator>
+void radix_sort(RandomAccessIterator first, RandomAccessIterator last,
+                size_t max);
 
 // container versions
 
-template <size_t Radix, class Cont>
-void radix_sort(Cont& v, size_t max);
+template <size_t Radix, class Container>
+void radix_sort(Container& v, size_t max);
 
 
 // implementation

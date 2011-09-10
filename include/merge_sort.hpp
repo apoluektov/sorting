@@ -10,19 +10,20 @@
 
 // iterators versions
 
-template <class RanIt, class Cmp>
-void merge_sort(RanIt b, RanIt e, Cmp c);
+template <class RandomAccessIterator>
+void merge_sort(RandomAccessIterator first, RandomAccessIterator last);
 
-template <class RanIt>
-void merge_sort(RanIt b, RanIt e);
+template <class RandomAccessIterator, class Compare>
+void merge_sort(RandomAccessIterator first, RandomAccessIterator last,
+                Compare comp);
 
 // container versions
 
-template <class Cont, class Cmp>
-void merge_sort(Cont& v, Cmp c);
+template <class Container>
+void merge_sort(Container& v);
 
-template <class Cont>
-void merge_sort(Cont& v);
+template <class Container, class Compare>
+void merge_sort(Container& v, Compare comp);
 
 
 // implementation
