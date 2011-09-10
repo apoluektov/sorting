@@ -7,7 +7,6 @@
 #ifndef HEAPSORT_HPP_INCLUDED_
 #define HEAPSORT_HPP_INCLUDED_
 
-#include <vector>
 #include <cstddef>
 #include <algorithm>
 #include <functional>
