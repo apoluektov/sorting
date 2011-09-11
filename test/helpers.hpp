@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <vector>
 
-
+inline
 void generate_random(std::vector<size_t>& v, size_t n, size_t max)
 {
     for (size_t i = 0; i < n; ++i) {
@@ -18,7 +18,7 @@ void generate_random(std::vector<size_t>& v, size_t n, size_t max)
     }
 }
 
-
+inline
 bool check_sorted(std::vector<size_t> const& v)
 {
     size_t const size = v.size();
