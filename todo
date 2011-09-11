@@ -3,9 +3,7 @@
 - copy-paste from benchmarking
 - copy-paste from merge sort implementations
 - unit tests for all versions of algorithms
-- heap_sort -> iterators version
-- radix, quick, quick-iterative
-- naming of types
+- quick, quick-iterative
 - comments and documentation
 - Makefile madness
 - radix sort: seems to not be very efficient
