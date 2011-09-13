@@ -5,7 +5,8 @@
 # LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 SOURCES=test/main.cpp test/test_heap_sort.cpp test/test_radix_sort.cpp \
-        test/test_merge_sort.cpp test/test_merge_sort_bottomup.cpp
+        test/test_merge_sort.cpp test/test_merge_sort_bottomup.cpp \
+        test/test_quick_sort.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 
