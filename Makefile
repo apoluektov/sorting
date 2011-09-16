@@ -6,7 +6,7 @@
 
 SOURCES=test/main.cpp test/test_heap_sort.cpp test/test_radix_sort.cpp \
         test/test_merge_sort.cpp test/test_merge_sort_bottomup.cpp \
-        test/test_quick_sort.cpp
+        test/test_quick_sort.cpp test/test_quick_sort_iterative.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 
