@@ -28,10 +28,8 @@ RanIt part(RanIt b, RanIt e, Cmp c)
     RanIt i  = b;
     RanIt ip = b;
 
-    for ( ; i != e-1; ++i)
-    {
-        if (c(*i, pivot))
-        {
+    for ( ; i != e-1; ++i) {
+        if (c(*i, pivot)) {
             swap(*i, *ip);
             ++ip;
         }
@@ -52,22 +50,19 @@ void quick_sort_iterative_impl(RanIt b, RanIt e, Cmp c)
     arr.push(b);
     arr.push(e);
 
-    while (!arr.empty())
-    {
+    while (!arr.empty()) {
         RanIt e1 = arr.top();
         arr.pop();
         RanIt b1 = arr.top();
         arr.pop();
 
         RanIt p = part(b1, e1, c);
-        if (b1 < p)
-        {
+        if (b1 < p) {
             arr.push(b1);
             arr.push(p);
         }
 
-        if (p < e1-1)
-        {
+        if (p < e1-1) {
             arr.push(p);
             arr.push(e1);
         }

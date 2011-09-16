@@ -26,11 +26,9 @@ RanIt part(RanIt b, RanIt e, Cmp c)
 
     RanIt i  = b;
     RanIt ip = b;
-
-    for ( ; i != e-1; ++i)
-    {
-        if (c(*i, pivot))
-        {
+ 
+    for ( ; i != e-1; ++i) {
+        if (c(*i, pivot)) {
             swap(*i, *ip);
             ++ip;
         }

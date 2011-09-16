@@ -1,3 +1,7 @@
+- (tue) quick sort
+- (wed) quick sort iterative
+- (thu,fri) copy-paste from unit-tests
+
 - unit-tests: avoid repetition (refactor common test suite for all sorts)
 - benchmarking
 - copy-paste from benchmarking
